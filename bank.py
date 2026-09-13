@@ -1,3 +1,6 @@
+from db import Database
+
+
 class Account:
 	def __init__(self, accountNumber, holder, balance = 0.00):
 		self.accountNumber = accountNumber
@@ -16,23 +19,15 @@ class Account:
 		self.transactions.append(f"{description} :/ -{amount:.2f}")
 
 
-
-
-
-
 class Bank:
 	def __init__(self):
-		self.accounts = {
-			1: Account(1, "Amadeu", 100.0),
-			2: Account(2, "Bruno", 200.0),
-			3: Account(3, "Carlos", 300.0),
-		}
+		self.db = Database()
 
 	def aux_account(self, accountNumber):
-		account = self.accounts.get(accountNumber)
-		if account is None:
+		row = self.db.get_account(accountNumber)
+		if row is None:
 			raise ValueError(f"{accountNumber} nao existe :O")
-		return account
+		return Account(row[0], row[1], row[2])
 
 	def get_balance(self, accountNumber):
 		return self.aux_account(accountNumber).balance
@@ -46,3 +41,6 @@ class Bank:
 
 		source_account.debit(amount, f"Transferencia para {destination}")
 		destination_account.credit(amount, f"Transferencia de {source}")
+
+		self.db.update_balance(source, source_account.balance)
+		self.db.update_balance(destination, destination_account.balance)
