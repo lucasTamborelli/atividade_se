@@ -32,6 +32,10 @@ class Bank:
 	def get_balance(self, accountNumber):
 		return self.aux_account(accountNumber).balance
 
+	def get_statement(self, accountNumber):
+		account = self.aux_account(accountNumber)
+		return f"Conta {account.accountNumber} ({account.holder}): {account.balance:.2f}"
+
 	def transfer(self, source, destination, amount):
 		if amount <= 0:
 			raise ValueError("valor deve ser maior que zero :P")

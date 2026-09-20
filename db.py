@@ -4,8 +4,8 @@ import sqlite3
 class Database:
 	def __init__(self):
 		self.conexao = sqlite3.connect("xyz.db")
-		self.create_tables()
-		self.seed()
+		self.create_table()
+		self.seed_start()
 
 	def create_table(self):
 		c = self.conexao.cursor()
