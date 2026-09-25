@@ -36,6 +36,13 @@ class Database:
 		c.close()
 		return row
 
+	def get_all_accounts(self):
+		c = self.conexao.cursor()
+		c.execute("SELECT number, holder, balance FROM accounts")
+		rows = c.fetchall()
+		c.close()
+		return rows
+
 	def update_balance(self, number, balance):
 		c = self.conexao.cursor()
 		c.execute(

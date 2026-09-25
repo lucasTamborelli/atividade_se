@@ -36,9 +36,18 @@ class Bank:
 		account = self.aux_account(accountNumber)
 		return f"Conta {account.accountNumber} ({account.holder}): {account.balance:.2f}"
 
+	def list_accounts(self):
+		lines = []
+		for row in self.db.get_all_accounts():
+			account = Account(row[0], row[1], row[2])
+			lines.append(f"Conta {account.accountNumber} ({account.holder}): {account.balance:.2f}")
+		return "\n".join(lines)
+
 	def transfer(self, source, destination, amount):
 		if amount <= 0:
 			raise ValueError("valor deve ser maior que zero :P")
+		if source == destination:
+			raise ValueError("nao da para transferir pra mesma conta :#")
 
 		source_account = self.aux_account(source)
 		destination_account = self.aux_account(destination)

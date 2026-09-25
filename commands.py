@@ -31,3 +31,10 @@ class Statement(Command):
 
 	def execute(self):
 		return self.bank.get_statement(self.accountNumber)
+
+class ListAccounts(Command):
+	def __init__(self, bank):
+		self.bank = bank
+
+	def execute(self):
+		return self.bank.list_accounts()
