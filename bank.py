@@ -34,7 +34,10 @@ class Bank:
 
 	def get_statement(self, accountNumber):
 		account = self.aux_account(accountNumber)
-		return f"Conta {account.accountNumber} ({account.holder}): {account.balance:.2f}"
+		lines = [f"Conta {account.accountNumber} ({account.holder})"]
+		lines += self.db.get_transactions(accountNumber) or ["(sem movimentacoes) :O"]
+		lines.append(f"Saldo: {account.balance:.2f}")
+		return "\n".join(lines)
 
 	def list_accounts(self):
 		lines = []
@@ -57,3 +60,5 @@ class Bank:
 
 		self.db.update_balance(source, source_account.balance)
 		self.db.update_balance(destination, destination_account.balance)
+		self.db.add_transaction(source, source_account.transactions[-1])
+		self.db.add_transaction(destination, destination_account.transactions[-1])

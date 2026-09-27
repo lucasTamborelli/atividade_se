@@ -13,6 +13,10 @@ class Database:
 			number integer primary key,
 			holder text,
 			balance real)""")
+
+		c.execute("""create table if not exists transactions(
+			account integer,
+			description text)""")
 		self.conexao.commit()
 		c.close()
 
@@ -51,3 +55,22 @@ class Database:
 		)
 		self.conexao.commit()
 		c.close()
+
+	def add_transaction(self, account, description):
+		c = self.conexao.cursor()
+		c.execute(
+			"INSERT INTO transactions VALUES (?, ?)",
+			(account, description),
+		)
+		self.conexao.commit()
+		c.close()
+
+	def get_transactions(self, account):
+		c = self.conexao.cursor()
+		c.execute(
+			"SELECT description FROM transactions WHERE account = ? ORDER BY rowid",
+			(account,),
+		)
+		rows = c.fetchall()
+		c.close()
+		return [row[0] for row in rows]

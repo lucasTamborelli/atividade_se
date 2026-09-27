@@ -23,9 +23,6 @@ atividade_se/
 GUI -> Command -> Bank -> Database
 ```
 
-Cada botão da GUI cria um comando e chama `execute()`. Quem fala com o `Bank` é o comando (não GUI).
-Todo comando realizado entra no histórico.
-
 
 **Como Executar**
 ```bash

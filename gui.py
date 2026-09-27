@@ -23,7 +23,7 @@ class Window:
 		# ---
 		tk.Button(root, text="Saldo", command=self.balance).grid(row=4, column=0, pady=10)
 		tk.Button(root, text="Extrato", command=self.statement).grid(row=4, column=1, pady=10)
-		tk.Button(root, text="Transferir", command=self.tarnsfer).grid(row=4, column=2, pady=10)
+		tk.Button(root, text="Transferir", command=self.transfer).grid(row=4, column=2, pady=10)
 		tk.Button(root, text="Listar Contas", command=self.list_accounts).grid(row=4, column=3, pady=10)
 		# ---
 		tk.Label(root, text="Historico das Operações:").grid(row=5, column=0, sticky="w", padx=5)
@@ -50,7 +50,7 @@ class Window:
 		messagebox.showinfo("Extrato", extrato)
 		self.lista.insert(tk.END, f"Extrato da conta {conta}")
 
-	def tarnsfer(self):
+	def transfer(self):
 		try:
 			origem = int(self.entry_conta.get())
 			destino = int(self.entry_destino.get())
